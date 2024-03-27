@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книжная полка</title>
+</head>
+<body>
+    <h1>Книжная полка</h1>
+    <h2>Книги</h2>
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{{ url_for('genre_view', genre_id=book.genre.id) }}">{{ book.genre.name }}</a> -
+                <a href="#">{{ book.title }}</a> by {{ book.author }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
