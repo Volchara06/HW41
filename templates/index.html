@@ -11,10 +11,11 @@
     <ul>
         {% for book in books %}
             <li>
-                <a href="{{ url_for('genre_view', genre_id=book.genre.id) }}">{{ book.genre.name }}</a> -
+                <a href="{{ url_for('views.genre_view', genre_id=book.genre.id) }}">{{ book.genre.name }}</a> -
                 <a href="#">{{ book.title }}</a> by {{ book.author }}
             </li>
         {% endfor %}
     </ul>
+    <a href="{{ url_for('views.add_book') }}">Добавить книгу</a>
 </body>
 </html>
