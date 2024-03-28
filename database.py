@@ -14,7 +14,7 @@ class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     books = db.relationship('Book', backref='genre', lazy=True)
-
+# Избегание появления дублей жанров
     @classmethod
     def get_or_create(cls, name):
         genre = cls.query.filter_by(name=name).first()
