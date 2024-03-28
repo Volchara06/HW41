@@ -14,3 +14,12 @@ class Genre(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     books = db.relationship('Book', backref='genre', lazy=True)
+
+    @classmethod
+    def get_or_create(cls, name):
+        genre = cls.query.filter_by(name=name).first()
+        if genre is None:
+            genre = cls(name=name)
+            db.session.add(genre)
+            db.session.commit()
+        return genre
