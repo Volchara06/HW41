@@ -1,26 +1,21 @@
-import os
 # Создание нового проекта Flask
+import os
 from flask import Flask
 from flask import render_template
 from database import db, Book, Genre
+from views import views
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///books.db')
+app.register_blueprint(views)
 db.init_app(app)
 
+# Добавление данных в базу данных
 with app.app_context():
-    # Добавление данных в базу данных
     db.create_all()
-
-    # Примеры книг для тестирования
-    fantasy_genre = Genre(name='Fantasy')
-    horror_genre = Genre(name='Horror')
-
-    book1 = Book(title='Book 1', author='Author 1', genre=fantasy_genre)
-    book2 = Book(title='Book 2', author='Author 2', genre=fantasy_genre)
-    book3 = Book(title='Book 3', author='Author 3', genre=horror_genre)
-
-    db.session.add_all([fantasy_genre, horror_genre, book1, book2, book3])
+    fantasy_genre = Genre.get_or_create(name='Fantasy')
+    horror_genre = Genre.get_or_create(name='Horror')
+    db.session.add_all([fantasy_genre, horror_genre])
     db.session.commit()
 
 
